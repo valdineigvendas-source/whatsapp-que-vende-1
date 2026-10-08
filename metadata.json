@@ -1,0 +1,8 @@
+{
+  "name": "Remix WhatsApp que Vende - SaaS de Vendas no WhatsApp",
+  "description": "Assistente definitivo de vendas no WhatsApp para profissionais, MEIs e autônomos. Mensagens prontas, contorno de objeções, busca rápida e método de conversão.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile, configuration, access status and plan details",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Unique Firebase Authentication UID" },
+        "name": { "type": "string", "description": "User display name" },
+        "email": { "type": "string", "description": "User email address" },
+        "profession": { "type": "string", "description": "Profession or niche name" },
+        "businessType": { "type": "string", "description": "Type of business or enterprise" },
+        "tonePreference": { "type": "string", "description": "Preferred communication tone" },
+        "autoCopySignature": { "type": "boolean", "description": "Whether to auto append signature" },
+        "businessSignature": { "type": "string", "description": "Optional business signature" },
+        "avatarUrl": { "type": "string", "description": "Profile picture URL" },
+        "accessStatus": { "type": "string", "enum": ["active", "pending", "inactive"], "description": "Account status" },
+        "plan": { "type": "string", "enum": ["free", "paid"], "description": "Current plan" },
+        "purchaseId": { "type": "string", "description": "External purchase identifier (e.g. Cakto)" },
+        "purchaseDate": { "type": "string", "description": "ISO timestamp of purchase" },
+        "accessExpiresAt": { "type": "string", "description": "ISO timestamp when access expires if applicable" },
+        "createdAt": { "type": "string", "description": "ISO timestamp of creation" },
+        "updatedAt": { "type": "string", "description": "ISO timestamp of last update" }
+      },
+      "required": ["uid", "email", "accessStatus", "plan"]
+    },
+    "UserFavorites": {
+      "title": "UserFavorites",
+      "description": "List of favorite message IDs saved by the user",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner user UID" },
+        "messageIds": { "type": "array", "description": "Array of favorited message IDs" },
+        "updatedAt": { "type": "string", "description": "ISO timestamp of last update" }
+      },
+      "required": ["userId", "messageIds"]
+    },
+    "UserProgress": {
+      "title": "UserProgress",
+      "description": "Tracks accessed categories, messages and 7-day challenge progress",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner user UID" },
+        "completedDays": { "type": "array", "description": "Array of completed challenge day numbers" },
+        "recentMessageIds": { "type": "array", "description": "Recently accessed message IDs" },
+        "viewedCategories": { "type": "array", "description": "Accessed category IDs" },
+        "updatedAt": { "type": "string", "description": "ISO timestamp of last update" }
+      },
+      "required": ["userId"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Private user profile and subscription status, strictly isolated by user ID"
+    },
+    "/users/{userId}/favorites/default": {
+      "schema": "UserFavorites",
+      "description": "User saved favorite messages document"
+    },
+    "/users/{userId}/progress/default": {
+      "schema": "UserProgress",
+      "description": "User learning and message navigation progress"
+    }
+  }
+}
